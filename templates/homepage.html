@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> CISS OpenData Portal</title>
+</head>
+<body>
+<div class="get_all_dataset">
+    <h3>The Dataset List from coming from the CISS OpenData main Instance</h3>
+    <ul>
+
+        {% for re in res.result %}
+            <li>{{ re }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div>
+    <input type="search" id="search_dataset" placeholder="search dataset">
+    <p id="search_result"></p>
+</div>
+
+<script>
+    let res_search = Array({{ res_search.result.results|safe }});
+    let res_temp = 0;
+    let search_dataset = document.getElementById("search_dataset");
+    let search_result = document.getElementById("search_result");
+
+
+    search_dataset.addEventListener('input', function (e) {
+        let search_key = e.target.value.toLowerCase();
+
+        for(let i = 0; i < res_search[0].length; i++) {
+            let current_index = res_search[0][i];
+
+            if (current_index.toLowerCase().indexOf(search_key) > -1) {
+                search_result.innerHTML += current_index + "<br/>";
+            }
+        }
+
+    })
+</script>
+
+</body>
+</html>
