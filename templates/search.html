@@ -1,0 +1,47 @@
+
+
+
+{% block search %}
+     <h3>Test 2: Search Dataset from the main CKAN Instance</h3>
+        <input type="search" class="form-control" id="search_dataset" placeholder="search dataset">
+        <p id="search_result"></p>
+    <div>
+        <hr>
+        <br>
+    {{ res_search.result.count }}
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    $(document).ready(
+        function search_data () {
+
+            let search_dataset = document.getElementById("search_dataset");
+            let search_result = document.getElementById("search_result");
+            {#let res_search = {{ res_search.result.results|tojson }};#}
+            let res_search = {{ res_search.result|tojson }};
+
+            search_dataset.addEventListener('input', function (e) {
+                let search_key = e.target.value.toLowerCase();
+
+                for (let i = 0; i < res_search.length; i++) {
+                    let current_index = res_search[i];
+
+                    if (current_index.toLowerCase().indexOf(search_key) > -1) {
+                        search_result.innerHTML +=  "<a href=''datasetdetails.html' >"+ current_index + "</a>" + "<br/>";
+                    }
+
+                }
+
+            });
+
+
+        });
+</script>
+{% endblock %}

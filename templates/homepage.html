@@ -6,43 +6,63 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> CISS OpenData Portal</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
-<body>
-<div class="get_all_dataset">
-    <h3>The Dataset List from coming from the CISS OpenData main Instance</h3>
-    <ul>
-
-        {% for re in res.result %}
-            <li>{{ re }}</li>
-        {% endfor %}
-    </ul>
+<body class="container">
+<h3 class="mt-3">Sample Tests Showing a Shop Instance Crawling the Dataset from the CKAN Site </h3>
+<hr style="border-top-color: red">
+<br>
+<div class="get_all_dataset mt-4">
+    <h3>Test 1: Crawling all Dataset from the main CKAN Instance</h3>
+    <button class="btn btn-sm btn-outline-primary" id="btn_all_dataset">Crawl all Dataset</button>
+    <hr>
+    <div>{{ x }}</div>
 </div>
+
 
 <div>
-    <input type="search" id="search_dataset" placeholder="search dataset">
-    <p id="search_result"></p>
+    {% block search %}
+
+    {% endblock %}
+
+{% block org %}{% endblock %}
+
 </div>
 
-<script>
-    let res_search = Array({{ res_search.result.results|safe }});
-    let res_temp = 0;
-    let search_dataset = document.getElementById("search_dataset");
-    let search_result = document.getElementById("search_result");
 
+{% block javascript %}
 
-    search_dataset.addEventListener('input', function (e) {
-        let search_key = e.target.value.toLowerCase();
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
 
-        for(let i = 0; i < res_search[0].length; i++) {
-            let current_index = res_search[0][i];
+<script type="text/javascript">
+    $(document).ready(
 
-            if (current_index.toLowerCase().indexOf(search_key) > -1) {
-                search_result.innerHTML += current_index + "<br/>";
-            }
-        }
+        {# Crawl all dataset   #}
+        function show_all() {
+            let doc = document.getElementById('btn_all_dataset');
+            let res_dataset = {{ res.result|tojson|safe }};
 
-    })
+            doc.addEventListener('click', function () {
+
+                for (let re = 0; re < res_dataset.length; re++ ){
+                    let li = document.createElement('li');
+                    let li_res = document.createTextNode(res_dataset[re]);
+                    let li_content = li.appendChild(li_res);
+                    let x = li_content.textContent;
+
+                    console.log(x);
+
+                }
+
+            });
+
+        },
+    );
 </script>
+
+{% endblock %}
 
 </body>
 </html>
