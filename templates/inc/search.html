@@ -1,8 +1,5 @@
-
-
-
 {% block search %}
-     <h3>Test 2: Search Dataset from the main CKAN Instance</h3>
+     <h3>Test 3: Search Dataset from the main CKAN Instance</h3>
         <input type="search" class="form-control" id="search_dataset" placeholder="search dataset">
         <p id="search_result"></p>
     <div>
@@ -11,7 +8,6 @@
     {{ res_search.result.count }}
     </div>
 {% endblock %}
-
 
 {% block javascript %}
 <script src="https://code.jquery.com/jquery-3.4.1.js"
@@ -24,7 +20,6 @@
 
             let search_dataset = document.getElementById("search_dataset");
             let search_result = document.getElementById("search_result");
-            {#let res_search = {{ res_search.result.results|tojson }};#}
             let res_search = {{ res_search.result|tojson }};
 
             search_dataset.addEventListener('input', function (e) {
@@ -36,12 +31,8 @@
                     if (current_index.toLowerCase().indexOf(search_key) > -1) {
                         search_result.innerHTML +=  "<a href=''datasetdetails.html' >"+ current_index + "</a>" + "<br/>";
                     }
-
                 }
-
             });
-
-
         });
 </script>
 {% endblock %}

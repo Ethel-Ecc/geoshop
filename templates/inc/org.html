@@ -1,5 +1,5 @@
 {% block org %}
-     <h3>Test 3: Organizations in CISS CKAN Instance</h3>
+     <h3>Test 4: Organizations in CISS CKAN Instance</h3>
 
     <button class="btn btn-sm btn-outline-primary" id="org_btn">Crawl all Organization</button>
     <p id="org_list"></p>
@@ -19,12 +19,12 @@
             let org_list = document.getElementById("org_list");
             let org = {{ org.result|tojson }};
 
+
             org_btn.addEventListener('click', function () {
 
                 for (let i = 0; i < org.length; i++) {
-                    org_list.innerHTML += "<a href='org_description.html'>"+ org[i] +" </a> "+'<br>';
+                    org_list.innerHTML += "<a href='org[i]'>"+ org[i] +" </a> "+'<br>';
                 }
-
             });
 
             // TODO -  Display returned results orderly.

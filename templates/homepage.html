@@ -1,68 +1,47 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> CISS OpenData Portal</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-<body class="container">
-<h3 class="mt-3">Sample Tests Showing a Shop Instance Crawling the Dataset from the CKAN Site </h3>
-<hr style="border-top-color: red">
-<br>
-<div class="get_all_dataset mt-4">
-    <h3>Test 1: Crawling all Dataset from the main CKAN Instance</h3>
-    <button class="btn btn-sm btn-outline-primary" id="btn_all_dataset">Crawl all Dataset</button>
-    <hr>
-    <div>{{ x }}</div>
-</div>
+{% extends '_baseTemplate.html' %}
+
+{% block content %}
+    <div class="text-center">
+        <h3 class="mt-3 text-justify-">Tests Interaction with the CKAN-Instance</h3>
+        <hr style="border-top-color: navy">
+        <br>
+        <div class="get_all_dataset">
+            <h4>Test 1: Crawling all Dataset from the main CKAN Instance</h4>
+            <button class="btn btn-sm btn-outline-primary" id="btn_all_dataset">Crawl all Dataset</button>
+            <hr>
+            <div id = result_div>
+                <div id="all_dataset" class="card-deck"></div>
+            </div>
 
 
-<div>
-    {% block search %}
-
-    {% endblock %}
-
-{% block org %}{% endblock %}
-
-</div>
-
-
-{% block javascript %}
-
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-        crossorigin="anonymous"></script>
-
-<script type="text/javascript">
-    $(document).ready(
-
-        {# Crawl all dataset   #}
-        function show_all() {
-            let doc = document.getElementById('btn_all_dataset');
-            let res_dataset = {{ res.result|tojson|safe }};
-
-            doc.addEventListener('click', function () {
-
-                for (let re = 0; re < res_dataset.length; re++ ){
-                    let li = document.createElement('li');
-                    let li_res = document.createTextNode(res_dataset[re]);
-                    let li_content = li.appendChild(li_res);
-                    let x = li_content.textContent;
-
-                    console.log(x);
-
-                }
-
-            });
-
-        },
-    );
-</script>
+        </div>
+    </div>
 
 {% endblock %}
 
-</body>
-</html>
+{#<div class="all_data mt-4">
+    <h3>Test 2: Crawling the entire CISS-CKAN Instance</h3>
+    <button class="btn btn-sm btn-outline-success" id="btn_all_data">Crawl whole Instance</button>
+    <hr>
+    <p id="all_data_p"></p>
+</div>
+<div>
+    {% block search %}
+    {% endblock %}
+{% block org %}{% endblock %}
+</div>#}
+
+{% block javascript %}
+    {{ super() }}
+
+    {# here, I am passing the variables from flask to a global JS Variable #}
+    <script type="text/javascript">
+        let res = {{ res.result|tojson }};
+        let one = {{ one }};
+    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='_base.js') }}"></script>
+
+
+
+{% endblock %}
+

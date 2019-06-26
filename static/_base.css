@@ -1,0 +1,25 @@
+*{
+    margin: 0;
+}
+html, body{
+   height: 100%;
+}
+
+body{
+    background: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.nav_css{
+    color: whitesmoke;
+    font-weight: bolder;
+}
+
+.base_footer{
+    height: 50px;
+    line-height: 50px;
+    background-color: firebrick;
+    color: whitesmoke;
+    text-align: center;
+}
