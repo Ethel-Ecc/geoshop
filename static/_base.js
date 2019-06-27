@@ -1,11 +1,20 @@
 'use strict';
 
+let search_pagination = document.getElementById('searchResults');
+search_pagination.style.visibility = 'hidden';
+
+let breaker = document.getElementById('breaker');
+breaker.style.visibility = 'hidden';
+
+
 window.onload= function () {
     console.log(one);
+
     let result_div = document.getElementById("result_div");
     let parent_div = document.getElementById('all_dataset');
 
     show_all();
+
 
     function show_all() {
         let doc = document.getElementById('btn_all_dataset');
@@ -19,48 +28,40 @@ window.onload= function () {
                 let counter = 0;
                 counter = re;
 
-                if(counter <= 5 && clickCount === 1){
+                if(counter < 5 && clickCount === 1){
                     create_cardElements();
-                    newCard.setAttribute("style", "width:20px; float:left;");
-                    cardImg.src = "logo_bmwi.jpg";
+
+                    newCard.setAttribute("style", "width:20px; float:left; text-align:justify");
                     cardTitle.setAttribute("style", "font-weight:bold");
                     cardTitle.innerText = res_dataset[re];
+                    cardText.innerText = res_dataset[re];
                 }
 
                 if (counter > 5){
-                    console.log(counter, '=', res_dataset[re])
+                    console.log(counter, '=', res_dataset[re]);
                 }
             }
 
-            for(let i = 0; i < res_dataset.length / 1; i++){
-                create_paginationElements();
-                new_pageNavUL.className = "pagination justify-content-center";
-                new_pageNavLI.className = "page-item";
-                new_pageNavAnchor.className = "page-link";
-                new_pageNavAnchor.href = "https://google.com";
-                new_pageNavAnchor.innerText = i.toString();
-
-            }
+            breaker.style.visibility = "visible";
+            search_pagination.style.visibility = "visible";
 
             doc.disabled = true;
+            document.getElementById("previous").className = "page-item disabled";
+            document.getElementById("page1").className = "page-item disabled";
         });
    }
 
-   function create_cardElements() {
+    function create_cardElements() {
         // Global variables exposed with window.[...]
        let new_card = document.createElement("div");
-       new_card.className = "card border-success mr-2";
+       new_card.className = "card card-header border-success mr-2";
        new_card.id = "new_card";
        parent_div.appendChild(new_card);
        window.newCard = new_card;
 
-       let card_img = document.createElement("img");
-       card_img.className = "card-img-top";
-       new_card.appendChild(card_img);
-       window.cardImg = card_img;
 
        let newcard_innerdiv = document.createElement("div");
-       newcard_innerdiv.className = "card-body";
+       newcard_innerdiv.className = "card-body text-primary";
        new_card.appendChild(newcard_innerdiv);
        window.newcardInnerDiv = newcard_innerdiv;
 
@@ -70,34 +71,14 @@ window.onload= function () {
        newcard_innerdiv.appendChild(card_title);
        window.cardTitle = card_title;
 
+
        let card_text = document.createElement("p");
-       card_text.className ="card-text";
+       card_text.className ="card-text text-success";
        newcard_innerdiv.appendChild(card_text);
        window.cardText = card_text;
+
     }
 
-   function create_paginationElements() {
-
-        let breaker = document.createElement("br");
-        let new_pageNav = document.createElement("nav");
-        let new_pageNavUL = document.createElement("ul");
-        let new_pageNavLI = document.createElement("li");
-        let new_pageNavAnchor = document.createElement("a");
-
-        result_div.appendChild(new_pageNav);
-        new_pageNavUL.appendChild(new_pageNavLI);
-        new_pageNavLI.appendChild(new_pageNavAnchor);
-
-        $("new_pageNav").insertAfter("#parent_div");
-        //result_div.insertBefore(parent_div, new_pageNav);
-
-
-       window.breaker = breaker;
-       window.new_pageNav = new_pageNav;
-       window.new_pageNavUL = new_pageNavUL;
-       window.new_pageNavLI = new_pageNavLI;
-       window.new_pageNavAnchor = new_pageNavAnchor
-   }
 };
 
                 /*{# Show everything from the Instance, tweeked to show only a minimum #}
