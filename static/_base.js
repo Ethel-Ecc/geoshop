@@ -6,7 +6,6 @@ search_pagination.style.visibility = 'hidden';
 let breaker = document.getElementById('breaker');
 breaker.style.visibility = 'hidden';
 
-
 window.onload= function () {
     console.log(one);
 
@@ -18,9 +17,11 @@ window.onload= function () {
 
     function show_all() {
         let doc = document.getElementById('btn_all_dataset');
+        window.doc = doc;
+
         let res_dataset = res;
         let clickCount = 0;
-        // let all_data = {{ all_res.result.results|tojson|safe }};
+        // let all_data = {{ all_res.result.results| tojson |safe }};
 
         doc.addEventListener('click', function () {
             clickCount ++;
@@ -35,19 +36,82 @@ window.onload= function () {
                     cardTitle.setAttribute("style", "font-weight:bold");
                     cardTitle.innerText = res_dataset[re];
                     cardText.innerText = res_dataset[re];
+
                 }
 
-                if (counter > 5){
-                    console.log(counter, '=', res_dataset[re]);
+                if(counter < 5){
+                    document.getElementById("page1").addEventListener('click', function () {
+                        document.getElementById("new_card").remove();
+                        create_cardElements();
+
+                        newCard.setAttribute("style", "width:20px; float:left; text-align:justify");
+                        cardTitle.setAttribute("style", "font-weight:bold");
+                        cardTitle.innerText = res_dataset[re];
+                        cardText.innerText = res_dataset[re];
+                    });
                 }
+
+                if (counter >=5 && counter <10 ){
+                    document.getElementById("page2").addEventListener('click', function () {
+                        document.getElementById("new_card").remove();
+
+                        create_cardElements();
+
+                        newCard.setAttribute("style", "width:20px; float:left; text-align:justify");
+                        cardTitle.setAttribute("style", "font-weight:bold");
+                        cardTitle.innerText = res_dataset[re];
+                        cardText.innerText = res_dataset[re];
+                    })
+                }
+
+                if (counter >=10 && counter < 15 ){
+                    document.getElementById("page3").addEventListener('click', function () {
+                        document.getElementById("new_card").remove();
+                        create_cardElements();
+
+                        newCard.setAttribute("style", "width:20px; float:left; text-align:justify");
+                        cardTitle.setAttribute("style", "font-weight:bold");
+                        cardTitle.innerText = res_dataset[re];
+                        cardText.innerText = res_dataset[re];
+                    })
+                }
+
+                if (counter >=15 && counter < 20 ){
+                    document.getElementById("page4").addEventListener('click', function () {
+                        document.getElementById("new_card").remove();
+                        create_cardElements();
+
+                        newCard.setAttribute("style", "width:20px; float:left; text-align:justify");
+                        cardTitle.setAttribute("style", "font-weight:bold");
+                        cardTitle.innerText = res_dataset[re];
+                        cardText.innerText = res_dataset[re];
+                    })
+                }
+
+                if (counter >=20){
+                    document.getElementById("new_card").remove();
+                    create_cardElements();
+
+                    newCard.setAttribute("style", "width:20px; float:left; text-align:justify");
+                    cardTitle.setAttribute("style", "font-weight:bold");
+                    cardTitle.innerText = "Coming Soon";
+                    cardText.innerText = "More Datasets will be loaded in due time";
+                }
+
             }
 
             breaker.style.visibility = "visible";
             search_pagination.style.visibility = "visible";
 
             doc.disabled = true;
-            document.getElementById("previous").className = "page-item disabled";
+
+
+            document.getElementById("page_numbers").className = "page-item disabled";
             document.getElementById("page1").className = "page-item disabled";
+
+            pagination_handler();
+
+
         });
    }
 
@@ -77,6 +141,62 @@ window.onload= function () {
        newcard_innerdiv.appendChild(card_text);
        window.cardText = card_text;
 
+    }
+
+
+    function pagination_handler() {
+
+
+        let page1 = document.getElementById('page1');
+        let page2 = document.getElementById('page2');
+        let page3 = document.getElementById('page3');
+        let page4 = document.getElementById('page4');
+
+        let page1_clickCounter = 0;
+
+        page1.addEventListener('click', function () {
+            if (page1_clickCounter == 0) {
+                console.log(page1.innerText);
+                page1.className = "page-item disabled";
+            } else{
+                page1.className = "page-item disabled";
+
+                page2.className = "page-item enabled";
+                page3.className = "page-item enabled";
+                page4.className = "page-item enabled";
+            }
+
+            page1_clickCounter++;
+
+        });
+
+        page2.addEventListener('click', function (e) {
+            console.log(page2.innerText);
+            page2.className = "page-item disabled";
+
+            page1.className = "page-item enabled";
+            page3.className = "page-item enabled";
+            page4.className = "page-item enabled";
+
+        });
+
+        page3.addEventListener('click', function () {
+            page3.className = "page-item disabled";
+
+            page1.className = "page-item enabled";
+            page2.className = "page-item enabled";
+            page4.className = "page-item enabled";
+
+        });
+
+        page4.addEventListener('click', function () {
+            page4.className = "page-item disabled";
+
+            page1.className = "page-item enabled";
+            page2.className = "page-item enabled";
+            page3.className = "page-item enabled";
+
+        });
     }
 
 };
